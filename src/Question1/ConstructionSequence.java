@@ -23,6 +23,7 @@ public class ConstructionSequence {
             }
             day++;
         }
+        //End of Input//
         if(arr.size()==numFloors) {
             System.out.println("The order of construction is as follows");
             constructionOrder(numFloors, arr);
