@@ -1,43 +1,61 @@
 package Question1;
-
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Scanner;
-
 
 public class ConstructionSequence {
     public static void main(String[] args) {
-        int numFloors, day = 1,floorSize;
+        int numFloors, day = 1, floorSize;
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter no.of Floors");
         numFloors = sc.nextInt();
-        ArrayList<Integer> arr = new ArrayList<>();
+        ArrayList<Integer> arr_Input = new ArrayList<>();
+        ArrayList<Integer> arr_Stack = new ArrayList<>();
+
+
         while (day <= numFloors) {
             System.out.println("enter the floor size given on day :" + day);
-            floorSize =sc.nextInt();
-            if(floorSize<=numFloors && !arr.contains(floorSize)){
-                arr.add(floorSize);
-            }
-            else{
+            floorSize = sc.nextInt();
+            if (!arr_Stack.contains(floorSize)) {
+                arr_Stack.add(floorSize);
+                arr_Input.add(floorSize);
+            } else {
                 System.out.println("Invalid Input");
                 break;
             }
             day++;
         }
         //End of Input//
-        if(arr.size()==numFloors) {
+        //Sort the array for using as stack
+        arr_Stack.sort(Collections.reverseOrder());
+
+        if (arr_Stack.size() == numFloors) {
             System.out.println("The order of construction is as follows");
-            constructionOrder(numFloors, arr);
+            constructionOrder(numFloors, arr_Stack, arr_Input);
         }
     }
 
-    private static void constructionOrder(int max, ArrayList<Integer> arr) {
-        int day =1, reqFloorSize;
-        reqFloorSize = max;
-        while(day<=max){
+    private static void constructionOrder(int numFloors, ArrayList<Integer> arr_Stack,
+                                          ArrayList<Integer> arr_Input) {
+        int day = 1, reqFloorSize, sizeP =0;
+        HashSet<Integer> trackSet = new HashSet<>();
+
+        reqFloorSize = arr_Stack.get(sizeP);
+        while(day<=numFloors){
+
             System.out.println("Day: "+day);
-            while(arr.subList(0,day).contains(reqFloorSize)){
-                System.out.print(reqFloorSize-- +" " );
-            }
+
+            trackSet.add(arr_Input.get(day-1));
+
+                while (trackSet.remove(reqFloorSize)){
+                    System.out.print(reqFloorSize+" ");
+                    if(sizeP <numFloors-1) {
+                        reqFloorSize = arr_Stack.get(++sizeP);
+                    }
+                }
+
+
             System.out.println("");
             day++;
         }
