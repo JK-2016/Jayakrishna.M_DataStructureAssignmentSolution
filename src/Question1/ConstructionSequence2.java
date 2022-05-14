@@ -27,7 +27,7 @@ public class ConstructionSequence2 {
             day++;
         }
         //End of Input//
-        //Sort the array
+        //Sort the array for using as stack
         arr_Stack.sort(Collections.reverseOrder());
 
         if (arr_Stack.size() == numFloors) {
@@ -48,9 +48,8 @@ public class ConstructionSequence2 {
 
             trackSet.add(arr_Input.get(day-1));
 
-                while (trackSet.contains(reqFloorSize)){
+                while (trackSet.remove(reqFloorSize)){
                     System.out.print(reqFloorSize+" ");
-                    trackSet.remove(reqFloorSize);
                     if(sizeP <numFloors-1) {
                         reqFloorSize = arr_Stack.get(++sizeP);
                     }
